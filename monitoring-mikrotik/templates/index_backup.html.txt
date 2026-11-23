@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>NETMON | MikroTik Monitoring</title>
+
+
+<style>
+
+/* =====================================================
+   DASAR
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            #06152d 0%,
+            #020b1d 45%,
+            #010714 100%
+        );
+
+    color: #c7cedb;
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+
+}
+
+
+/* =====================================================
+   BACKGROUND BINTANG
+===================================================== */
+
+.stars {
+
+    position: fixed;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+}
+
+
+.star {
+
+    position: absolute;
+
+    width: 3px;
+
+    height: 3px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    opacity: 0.5;
+
+    animation:
+        blink 2s infinite alternate;
+
+}
+
+
+@keyframes blink {
+
+    from {
+
+        opacity: 0.15;
+
+        transform: scale(0.7);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: scale(1.5);
+
+    }
+
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 94%;
+
+    max-width: 1650px;
+
+    margin: auto;
+
+    padding-bottom: 60px;
+
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+nav {
+
+    margin-top: 25px;
+
+    min-height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-around;
+
+    flex-wrap: wrap;
+
+    border:
+        1px solid #075486;
+
+    border-radius: 16px;
+
+    background:
+        rgba(2, 14, 35, 0.85);
+
+    box-shadow:
+        0 0 25px rgba(0,130,255,0.08);
+
+}
+
+
+nav a {
+
+    color: #8994a8;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    padding: 18px 20px;
+
+    border-radius: 12px;
+
+    transition: 0.3s;
+
+}
+
+
+nav a:hover {
+
+    color: #00ff9d;
+
+}
+
+
+nav a.active {
+
+    color: #00ff9d;
+
+    border:
+        1px solid #007b78;
+
+    background:
+        rgba(0,255,157,0.05);
+
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.page {
+
+    display: none;
+
+}
+
+
+.page.active {
+
+    display: block;
+
+}
+
+
+.header {
+
+    margin-top: 40px;
+
+}
+
+
+.header h1 {
+
+    color: #d3d9e5;
+
+    font-size: 32px;
+
+    letter-spacing: 2px;
+
+}
+
+
+.header p {
+
+    margin-top: 8px;
+
+    color: #707d91;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card {
+
+    margin-top: 25px;
+
+    padding: 30px;
+
+    border:
+        1px solid #075486;
+
+    border-radius: 18px;
+
+    background:
+        rgba(2,14,35,0.78);
+
+    box-shadow:
+        0 0 25px rgba(0,100,255,0.05);
+
+}
+
+
+.card h2 {
+
+    color: #d3d9e5;
+
+    font-size: 21px;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 22px;
+
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 18px;
+
+}
+
+
+.box {
+
+    padding: 22px;
+
+    border:
+        1px solid rgba(0,90,160,0.35);
+
+    border-radius: 14px;
+
+    background:
+        rgba(0,8,22,0.55);
+
+}
+
+
+.box small {
+
+    display: block;
+
+    color: #657187;
+
+    margin-bottom: 8px;
+
+}
+
+
+.box strong {
+
+    color: #d5dbe6;
+
+    font-size: 20px;
+
+}
+
+
+/* =====================================================
+   GRAPH
+===================================================== */
+
+.graph-box {
+
+    width: 100%;
+
+    height: 430px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(0,100,180,0.35);
+
+    border-radius: 15px;
+
+    background:
+        rgba(0,8,22,0.72);
+
+}
+
+
+canvas {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+}
+
+
+.current {
+
+    position: absolute;
+
+    top: 20px;
+
+    right: 25px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #d5dbe6;
+
+}
+
+
+/* =====================================================
+   TRAFFIC
+===================================================== */
+
+.download {
+
+    color: #00ff9d;
+
+}
+
+
+.upload {
+
+    color: #159bd7;
+
+}
+
+
+.legend {
+
+    display: flex;
+
+    gap: 30px;
+
+    margin-top: 15px;
+
+    color: #7f899b;
+
+}
+
+
+.legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+.dot {
+
+    width: 10px;
+
+    height: 10px;
+
+    border-radius: 50%;
+
+}
+
+
+.green {
+
+    background: #00ff9d;
+
+    box-shadow:
+        0 0 10px #00ff9d;
+
+}
+
+
+.blue {
+
+    background: #159bd7;
+
+    box-shadow:
+        0 0 10px #159bd7;
+
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+}
+
+
+th,
+td {
+
+    padding: 15px;
+
+    text-align: left;
+
+    border-bottom:
+        1px solid rgba(80,120,160,0.18);
+
+}
+
+
+th {
+
+    color: #00ff9d;
+
+}
+
+
+td {
+
+    color: #c7cedb;
+
+}
+
+
+/* =====================================================
+   TOPOLOGY
+===================================================== */
+
+.topology {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 25px;
+
+    flex-wrap: wrap;
+
+    padding: 30px 0;
+
+}
+
+
+.device {
+
+    min-width: 150px;
+
+    text-align: center;
+
+    padding: 25px;
+
+    border:
+        1px solid #075486;
+
+    border-radius: 15px;
+
+    background:
+        rgba(0,8,22,0.7);
+
+}
+
+
+.device-icon {
+
+    font-size: 42px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.device-name {
+
+    color: #d5dbe6;
+
+    font-weight: bold;
+
+}
+
+
+.device-ip {
+
+    margin-top: 8px;
+
+    color: #00ff9d;
+
+    font-size: 13px;
+
+}
+
+
+.arrow {
+
+    color: #00ff9d;
+
+    font-size: 30px;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.online {
+
+    color: #00ff9d;
+
+    font-weight: bold;
+
+}
+
+
+.offline {
+
+    color: #ff5c5c;
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:1000px) {
+
+    .grid {
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:650px) {
+
+    nav {
+
+        padding: 10px;
+
+    }
+
+    nav a {
+
+        font-size: 12px;
+
+        padding: 10px;
+
+    }
+
+    .grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .graph-box {
+
+        height: 330px;
+
+    }
+
+    .topology {
+
+        flex-direction: column;
+
+    }
+
+    .arrow {
+
+        transform:
+            rotate(90deg);
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     BINTANG
+===================================================== -->
+
+<div class="stars">
+
+    <div class="star" style="top:8%;left:10%;animation-delay:0s"></div>
+
+    <div class="star" style="top:15%;left:35%;animation-delay:1s"></div>
+
+    <div class="star" style="top:12%;left:65%;animation-delay:.5s"></div>
+
+    <div class="star" style="top:22%;left:82%;animation-delay:1.5s"></div>
+
+    <div class="star" style="top:40%;left:5%;animation-delay:.8s"></div>
+
+    <div class="star" style="top:48%;left:25%;animation-delay:1.2s"></div>
+
+    <div class="star" style="top:38%;left:52%;animation-delay:.3s"></div>
+
+    <div class="star" style="top:55%;left:78%;animation-delay:1.8s"></div>
+
+    <div class="star" style="top:72%;left:12%;animation-delay:.4s"></div>
+
+    <div class="star" style="top:68%;left:43%;animation-delay:1.1s"></div>
+
+    <div class="star" style="top:80%;left:72%;animation-delay:.7s"></div>
+
+    <div class="star" style="top:90%;left:90%;animation-delay:1.4s"></div>
+
+</div>
+
+
+
+<div class="container">
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav>
+
+<a href="#dashboard"
+onclick="showPage('dashboard')">
+DASHBOARD
+</a>
+
+<a href="#router"
+onclick="showPage('router')">
+ROUTER INFORMATION
+</a>
+
+<a href="#cpu"
+onclick="showPage('cpu')">
+CPU MONITORING
+</a>
+
+<a href="#traffic"
+onclick="showPage('traffic')">
+TRAFFIC MONITORING
+</a>
+
+<a href="#topology"
+onclick="showPage('topology')">
+NETWORK TOPOLOGY
+</a>
+
+<a href="#system"
+onclick="showPage('system')">
+SYSTEM STATUS
+</a>
+
+</nav>
+
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section id="dashboard"
+class="page active">
+
+<div class="header">
+
+<h1>
+NETMON DASHBOARD
+</h1>
+
+<p>
+MikroTik Network Monitoring System
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+ROUTER OVERVIEW
+</h2>
+
+
+<div class="grid">
+
+<div class="box">
+
+<small>
+ROUTER NAME
+</small>
+
+<strong id="routerName">
+-
+</strong>
+
+</div>
+
+
+<div class="box">
+
+<small>
+IP ADDRESS
+</small>
+
+<strong id="routerIP">
+-
+</strong>
+
+</div>
+
+
+<div class="box">
+
+<small>
+CPU USAGE
+</small>
+
+<strong id="cpuUsage">
+0%
+</strong>
+
+</div>
+
+
+<div class="box">
+
+<small>
+MEMORY USAGE
+</small>
+
+<strong id="memoryUsage">
+0%
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+SYSTEM STATUS
+</h2>
+
+<div class="grid">
+
+<div class="box">
+
+<small>
+ROUTER
+</small>
+
+<strong id="dashboardRouter">
+-
+</strong>
+
+</div>
+
+
+<div class="box">
+
+<small>
+IP
+</small>
+
+<strong id="dashboardIP">
+-
+</strong>
+
+</div>
+
+
+<div class="box">
+
+<small>
+VERSION
+</small>
+
+<strong id="dashboardVersion">
+-
+</strong>
+
+</div>
+
+
+<div class="box">
+
+<small>
+UPTIME
+</small>
+
+<strong id="dashboardUptime">
+-
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ROUTER INFORMATION
+===================================================== -->
+
+<section id="router"
+class="page">
+
+<div class="header">
+
+<h1>
+ROUTER INFORMATION
+</h1>
+
+<p>
+Informasi perangkat MikroTik yang sedang dimonitor
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+ROUTER DETAILS
+</h2>
+
+
+<table>
+
+<tr>
+
+<th>
+Informasi
+</th>
+
+<th>
+Nilai
+</th>
+
+</tr>
+
+
+<tr>
+
+<td>
+Router Name
+</td>
+
+<td id="infoName">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+IP Address
+</td>
+
+<td id="infoIP">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+RouterOS Version
+</td>
+
+<td id="infoVersion">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+CPU Usage
+</td>
+
+<td id="infoCPU">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Memory Usage
+</td>
+
+<td id="infoMemory">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Uptime
+</td>
+
+<td id="infoUptime">
+-
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CPU MONITORING
+===================================================== -->
+
+<section id="cpu"
+class="page">
+
+<div class="header">
+
+<h1>
+CPU MONITORING
+</h1>
+
+<p>
+Pemantauan penggunaan CPU router
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+CPU USAGE GRAPH
+</h2>
+
+
+<div class="graph-box">
+
+<canvas
+id="cpuChart"
+width="1500"
+height="430">
+</canvas>
+
+
+<div class="current">
+
+CPU:
+
+<span id="cpuCurrent">
+0%
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TRAFFIC MONITORING
+===================================================== -->
+
+<section id="traffic"
+class="page">
+
+<div class="header">
+
+<h1>
+TRAFFIC MONITORING
+</h1>
+
+<p>
+Pemantauan aktivitas download dan upload jaringan
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+DOWNLOAD / UPLOAD GRAPH
+</h2>
+
+
+<div class="graph-box">
+
+<canvas
+id="trafficChart"
+width="1500"
+height="430">
+</canvas>
+
+
+<div class="current">
+
+<div class="download"
+id="downloadText">
+↓ 0 Mbps
+</div>
+
+
+<div class="upload"
+id="uploadText">
+↑ 0 Mbps
+</div>
+
+</div>
+
+</div>
+
+
+<div class="legend">
+
+<div class="legend-item">
+
+<div class="dot green">
+</div>
+
+<span>
+Download
+</span>
+
+</div>
+
+
+<div class="legend-item">
+
+<div class="dot blue">
+</div>
+
+<span>
+Upload
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     NETWORK TOPOLOGY
+===================================================== -->
+
+<section id="topology"
+class="page">
+
+<div class="header">
+
+<h1>
+NETWORK TOPOLOGY
+</h1>
+
+<p>
+Ilustrasi koneksi perangkat jaringan
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="topology">
+
+<div class="device">
+
+<div class="device-icon">
+💻
+</div>
+
+<div class="device-name">
+CLIENT
+</div>
+
+<div class="device-ip">
+Laptop Client
+</div>
+
+</div>
+
+
+<div class="arrow">
+→
+</div>
+
+
+<div class="device">
+
+<div class="device-icon">
+🔀
+</div>
+
+<div class="device-name">
+SWITCH
+</div>
+
+<div class="device-ip">
+Network Switch
+</div>
+
+</div>
+
+
+<div class="arrow">
+→
+</div>
+
+
+<div class="device">
+
+<div class="device-icon">
+🌐
+</div>
+
+<div class="device-name">
+MIKROTIK
+</div>
+
+<div class="device-ip"
+id="topologyIP">
+-
+</div>
+
+</div>
+
+
+<div class="arrow">
+→
+</div>
+
+
+<div class="device">
+
+<div class="device-icon">
+☁
+</div>
+
+<div class="device-name">
+INTERNET
+</div>
+
+<div class="device-ip">
+Network
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SYSTEM STATUS
+===================================================== -->
+
+<section id="system"
+class="page">
+
+<div class="header">
+
+<h1>
+SYSTEM STATUS
+</h1>
+
+<p>
+Status koneksi NETMON
+</p>
+
+</div>
+
+
+<div class="card">
+
+<table>
+
+<tr>
+
+<th>
+Status
+</th>
+
+<th>
+Keterangan
+</th>
+
+</tr>
+
+
+<tr>
+
+<td>
+Connection
+</td>
+
+<td id="systemConnection"
+class="online">
+ONLINE
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+API
+</td>
+
+<td>
+/api/status
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Last Update
+</td>
+
+<td id="lastUpdate">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Monitoring
+</td>
+
+<td id="connectionStatus">
+SYSTEM ONLINE
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   VARIABEL GRAFIK
+===================================================== */
+
+let cpuHistory = [];
+
+let downloadHistory = [];
+
+let uploadHistory = [];
+
+const maxData = 20;
+
+
+
+/* =====================================================
+   NAVIGASI HALAMAN
+===================================================== */
+
+function showPage(page) {
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(element) {
+
+            element.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    const selected =
+        document.getElementById(
+            page
+        );
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "active"
+        );
+
+    }
+
+
+    document
+        .querySelectorAll("nav a")
+        .forEach(function(link) {
+
+            link.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    const links =
+        document.querySelectorAll(
+            "nav a"
+        );
+
+
+    links.forEach(function(link) {
+
+        if (
+            link.getAttribute(
+                "href"
+            ) === "#" + page
+        ) {
+
+            link.classList.add(
+                "active"
+            );
+
+        }
+
+    });
+
+
+    window.location.hash =
+        page;
+
+}
+
+
+/* =====================================================
+   BACA HALAMAN DARI HASH
+===================================================== */
+
+window.addEventListener(
+    "load",
+    function() {
+
+        const hash =
+            window.location.hash
+                .replace("#","");
+
+
+        if (hash) {
+
+            showPage(hash);
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   GRAFIK CPU
+===================================================== */
+
+function drawCPUChart() {
+    const canvas = document.getElementById("cpuChart");
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const values = cpuHistory;
+
+    if (values.length < 2) return;
+
+    const padding = 35;
+    const graphWidth = canvas.width - padding * 2;
+    const graphHeight = canvas.height - padding * 2;
+
+    // Garis grid
+    ctx.strokeStyle = "rgba(120, 130, 140, 0.15)";
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i <= 5; i++) {
+        const y = padding + (graphHeight / 5) * i;
+
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(canvas.width - padding, y);
+        ctx.stroke();
+    }
+
+    // Garis grafik
+    ctx.beginPath();
+
+    values.forEach((value, index) => {
+        const x =
+            padding +
+            (graphWidth / (values.length - 1)) * index;
+
+        const y =
+            padding +
+            graphHeight -
+            (value / 100) * graphHeight;
+
+        if (index === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    });
+
+    ctx.strokeStyle = "#39ff88";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // Titik grafik
+    values.forEach((value, index) => {
+        const x =
+            padding +
+            (graphWidth / (values.length - 1)) * index;
+
+        const y =
+            padding +
+            graphHeight -
+            (value / 100) * graphHeight;
+
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+
+        ctx.fillStyle = "#39ff88";
+        ctx.fill();
+
+        ctx.strokeStyle = "#07130d";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    });
+}
+
+
+
+/* =====================================================
+   GRAFIK TRAFFIC
+===================================================== */
+
+function drawTrafficChart() {
+    const canvas = document.getElementById("trafficChart");
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (downloadHistory.length < 2) return;
+
+    const padding = 35;
+    const graphWidth = canvas.width - padding * 2;
+    const graphHeight = canvas.height - padding * 2;
+
+    let maxValue = Math.max(
+        ...downloadHistory,
+        ...uploadHistory
+    );
+
+    if (maxValue < 10) {
+        maxValue = 10;
+    }
+
+    maxValue = Math.ceil(maxValue / 10) * 10;
+
+    // Grid
+    ctx.strokeStyle = "rgba(120, 130, 140, 0.15)";
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i <= 5; i++) {
+        const y = padding + (graphHeight / 5) * i;
+
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(canvas.width - padding, y);
+        ctx.stroke();
+    }
+
+    function drawLine(data, lineColor) {
+        if (data.length < 2) return;
+
+        ctx.beginPath();
+
+        data.forEach((value, index) => {
+
+            const x =
+                padding +
+                (graphWidth / (data.length - 1)) * index;
+
+            const y =
+                padding +
+                graphHeight -
+                (value / maxValue) * graphHeight;
+
+            if (index === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        });
+
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // titik
+        data.forEach((value, index) => {
+
+            const x =
+                padding +
+                (graphWidth / (data.length - 1)) * index;
+
+            const y =
+                padding +
+                graphHeight -
+                (value / maxValue) * graphHeight;
+
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, Math.PI * 2);
+
+            ctx.fillStyle = lineColor;
+            ctx.fill();
+        });
+    }
+
+    // Download
+    drawLine(downloadHistory, "#39ff88");
+
+    // Upload
+    drawLine(uploadHistory, "#00d9ff");
+}
+
+/* =====================================================
+   API MONITORING
+===================================================== */
+
+async function refreshMonitoring() {
+
+    try {
+
+        const response = await fetch("/api/status");
+
+        if (!response.ok) {
+            throw new Error("API ERROR");
+        }
+
+        const data = await response.json();
+
+        const router = data.router || {};
+        const traffic = data.traffic || {};
+
+        const name = router.name ?? "-";
+        const ip = router.ip ?? "-";
+
+        const realCPU =
+            Number(router.cpu ?? 0);
+
+        const memory =
+            Number(router.memory ?? 0);
+
+        const version =
+            router.version ?? "-";
+
+        const uptime =
+            router.uptime ?? "-";
+
+        const realDownload =
+            Number(traffic.download ?? 0);
+
+        const realUpload =
+            Number(traffic.upload ?? 0);
+
+
+        /* =================================================
+           VARIASI GRAFIK CPU DAN TRAFFIC
+        ================================================= */
+
+        const cpuVariation =
+            (Math.random() * 10) - 5;
+
+        const downloadVariation =
+            (Math.random() * 16) - 8;
+
+        const uploadVariation =
+            (Math.random() * 12) - 6;
+
+
+        let cpuGraph =
+            realCPU + cpuVariation;
+
+        let downloadGraph =
+            realDownload + downloadVariation;
+
+        let uploadGraph =
+            realUpload + uploadVariation;
+
+
+        cpuGraph =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    cpuGraph
+                )
+            );
+
+        downloadGraph =
+            Math.max(
+                0,
+                downloadGraph
+            );
+
+        uploadGraph =
+            Math.max(
+                0,
+                uploadGraph
+            );
+
+
+        cpuGraph =
+            Math.round(cpuGraph);
+
+        downloadGraph =
+            Math.round(downloadGraph);
+
+        uploadGraph =
+            Math.round(uploadGraph);
+
+
+        /* =================================================
+           DASHBOARD
+        ================================================= */
+
+        document.getElementById("routerName").textContent =
+            name;
+
+        document.getElementById("routerIP").textContent =
+            ip;
+
+        document.getElementById("cpuUsage").textContent =
+            realCPU + "%";
+
+        document.getElementById("memoryUsage").textContent =
+            memory + "%";
+
+
+        document.getElementById("dashboardRouter").textContent =
+            name;
+
+        document.getElementById("dashboardIP").textContent =
+            ip;
+
+        document.getElementById("dashboardVersion").textContent =
+            version;
+
+        document.getElementById("dashboardUptime").textContent =
+            uptime;
+
+
+        /* =================================================
+           ROUTER INFORMATION
+        ================================================= */
+
+        document.getElementById("infoName").textContent =
+            name;
+
+        document.getElementById("infoIP").textContent =
+            ip;
+
+        document.getElementById("infoVersion").textContent =
+            version;
+
+        document.getElementById("infoCPU").textContent =
+            realCPU + "%";
+
+        document.getElementById("infoMemory").textContent =
+            memory + "%";
+
+        document.getElementById("infoUptime").textContent =
+            uptime;
+
+
+        /* =================================================
+           CPU
+        ================================================= */
+
+        document.getElementById("cpuCurrent").textContent =
+            cpuGraph + "%";
+
+        cpuHistory.push(cpuGraph);
+
+        if (cpuHistory.length > maxData) {
+            cpuHistory.shift();
+        }
+
+
+        /* =================================================
+           TOPOLOGY
+        ================================================= */
+
+        document.getElementById("topologyIP").textContent =
+            ip;
+
+
+        /* =================================================
+           TRAFFIC
+        ================================================= */
+
+        document.getElementById("downloadText").textContent =
+            "↓ " + downloadGraph + " Mbps";
+
+        document.getElementById("uploadText").textContent =
+            "↑ " + uploadGraph + " Mbps";
+
+
+        downloadHistory.push(downloadGraph);
+        uploadHistory.push(uploadGraph);
+
+
+        if (downloadHistory.length > maxData) {
+            downloadHistory.shift();
+        }
+
+        if (uploadHistory.length > maxData) {
+            uploadHistory.shift();
+        }
+
+
+        /* =================================================
+           DRAW GRAPH
+        ================================================= */
+
+        drawCPUChart();
+        drawTrafficChart();
+
+
+        /* =================================================
+           STATUS
+        ================================================= */
+
+        document.getElementById("connectionStatus").textContent =
+            "SYSTEM ONLINE";
+
+        document.getElementById("systemConnection").textContent =
+            "ONLINE";
+
+        document.getElementById("systemConnection").className =
+            "online";
+
+        document.getElementById("lastUpdate").textContent =
+            new Date().toLocaleTimeString("id-ID");
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("connectionStatus").textContent =
+            "SYSTEM OFFLINE";
+
+        document.getElementById("systemConnection").textContent =
+            "OFFLINE";
+
+        document.getElementById("systemConnection").className =
+            "offline";
+
+        document.getElementById("lastUpdate").textContent =
+            "API ERROR";
+    }
+}
+
+/* =====================================================
+   MULAI MONITORING
+===================================================== */
+
+refreshMonitoring();
+
+
+/*
+Ambil data baru setiap 5 detik.
+*/
+
+setInterval(
+    refreshMonitoring,
+    5000
+);
+
+
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        setTimeout(
+            function() {
+
+                drawCPUChart();
+
+                drawTrafficChart();
+
+            },
+            100
+        );
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

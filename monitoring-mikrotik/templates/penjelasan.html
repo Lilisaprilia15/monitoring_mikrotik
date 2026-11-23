@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>NETMON | Penjelasan</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #020604;
+
+    color: #b7ffd6;
+
+    font-family: Arial, sans-serif;
+
+    min-height: 100vh;
+}
+
+.header {
+    padding: 25px 35px;
+
+    border-bottom: 1px solid #075c38;
+
+    background: #031009;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.logo {
+    color: #00ff88;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    letter-spacing: 5px;
+
+    text-shadow:
+        0 0 15px #00ff88;
+}
+
+.back {
+    color: #00ff88;
+
+    text-decoration: none;
+
+    border: 1px solid #075c38;
+
+    padding: 10px 16px;
+
+    border-radius: 6px;
+}
+
+.back:hover {
+    background: #00ff88;
+
+    color: #020604;
+}
+
+.container {
+    width: 90%;
+
+    max-width: 1000px;
+
+    margin: 35px auto;
+}
+
+.hero {
+    padding: 35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,40,20,.9),
+            rgba(0,10,5,.9)
+        );
+
+    border: 1px solid #075c38;
+
+    border-radius: 15px;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    color: #00ff88;
+
+    margin-bottom: 12px;
+
+    text-shadow:
+        0 0 10px rgba(0,255,136,.4);
+}
+
+.hero p {
+    line-height: 1.7;
+
+    color: #9bd9b5;
+}
+
+.section {
+    background:
+        rgba(0,18,9,.9);
+
+    border: 1px solid #075c38;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    margin-bottom: 18px;
+}
+
+.section h2 {
+    color: #00ff88;
+
+    font-size: 18px;
+
+    margin-bottom: 15px;
+}
+
+.section p {
+    line-height: 1.8;
+
+    color: #a8d9ba;
+}
+
+.feature {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+
+    margin-top: 15px;
+}
+
+.item {
+    padding: 17px;
+
+    background: #04160b;
+
+    border: 1px solid #075c38;
+
+    border-radius: 8px;
+}
+
+.item strong {
+    color: #00ff88;
+
+    display: block;
+
+    margin-bottom: 6px;
+}
+
+.item span {
+    color: #8eb89d;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+.code {
+    margin-top: 15px;
+
+    padding: 18px;
+
+    background: #010302;
+
+    border-left: 3px solid #00ff88;
+
+    color: #00ff88;
+
+    font-family: Consolas, monospace;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.footer {
+    text-align: center;
+
+    padding: 30px;
+
+    color: #326047;
+
+    font-size: 10px;
+}
+
+@media(max-width: 700px) {
+
+    .feature {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        gap: 15px;
+
+        flex-direction: column;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="logo">
+NETMON
+</div>
+
+<a class="back" href="/">
+← KEMBALI KE DASHBOARD
+</a>
+
+</header>
+
+
+<main class="container">
+
+
+<section class="hero">
+
+<h1>
+Tentang NETMON
+</h1>
+
+<p>
+NETMON merupakan sistem monitoring jaringan berbasis web
+yang digunakan untuk menampilkan informasi dan kondisi
+perangkat MikroTik melalui dashboard yang mudah dipantau.
+</p>
+
+</section>
+
+
+<section class="section">
+
+<h2>
+Tujuan Sistem
+</h2>
+
+<p>
+NETMON dibuat untuk membantu administrator jaringan
+memantau informasi dasar perangkat MikroTik secara
+terpusat melalui halaman web. Sistem ini menampilkan
+informasi seperti alamat IP, versi RouterOS, penggunaan CPU,
+penggunaan memori, uptime, interface, dan traffic jaringan.
+</p>
+
+</section>
+
+
+<section class="section">
+
+<h2>
+Fitur NETMON
+</h2>
+
+<div class="feature">
+
+<div class="item">
+
+<strong>01. Router Information</strong>
+
+<span>
+Menampilkan nama router, IP address,
+versi RouterOS, dan uptime.
+</span>
+
+</div>
+
+
+<div class="item">
+
+<strong>02. CPU Monitoring</strong>
+
+<span>
+Menampilkan persentase penggunaan CPU
+untuk melihat beban sistem router.
+</span>
+
+</div>
+
+
+<div class="item">
+
+<strong>03. Memory Monitoring</strong>
+
+<span>
+Menampilkan persentase penggunaan memori
+pada perangkat MikroTik.
+</span>
+
+</div>
+
+
+<div class="item">
+
+<strong>04. Network Interface</strong>
+
+<span>
+Menampilkan status interface seperti
+ether1, ether2, dan wlan1.
+</span>
+
+</div>
+
+
+<div class="item">
+
+<strong>05. Traffic Monitor</strong>
+
+<span>
+Menampilkan informasi traffic download
+dan upload jaringan.
+</span>
+
+</div>
+
+
+<div class="item">
+
+<strong>06. IP Configuration</strong>
+
+<span>
+Memungkinkan administrator mengubah IP
+yang digunakan dalam konfigurasi NETMON.
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<h2>
+Cara Kerja NETMON
+</h2>
+
+<p>
+NETMON menggunakan Flask sebagai server aplikasi.
+Browser mengakses dashboard melalui server Flask.
+Data monitoring disimpan dalam konfigurasi aplikasi
+dan kemudian ditampilkan pada halaman dashboard.
+</p>
+
+<div class="code">
+
+Browser
+↓
+NETMON Dashboard
+↓
+Flask / app.py
+↓
+Data Router
+↓
+Dashboard Monitoring
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<h2>
+Informasi Perangkat Saat Ini
+</h2>
+
+<div class="code">
+
+Router :
+{{ router.name }}
+
+IP Address :
+{{ router.ip }}
+
+RouterOS :
+{{ router.version }}
+
+Uptime :
+{{ router.uptime }}
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<h2>
+Kesimpulan
+</h2>
+
+<p>
+Dengan adanya NETMON, informasi dasar perangkat jaringan
+dapat ditampilkan dalam satu dashboard sehingga proses
+pemantauan menjadi lebih mudah, terstruktur, dan cepat.
+</p>
+
+</section>
+
+
+</main>
+
+
+<footer class="footer">
+NETMON © 2026 | MikroTik Network Monitoring System
+</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+{
+  "CHR 3": {
+    "name": "CHR 3",
+    "ip": "192.168.56.13",
+    "traffic_interface": "ether3"
+  }
+}

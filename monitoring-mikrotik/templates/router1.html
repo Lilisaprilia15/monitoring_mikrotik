@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>NETMON | CHR 1</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        #000816;
+
+    color:
+        #d5dbe6;
+
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container {
+
+    width: 90%;
+
+    max-width: 1200px;
+
+    margin:
+        40px auto;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+
+    margin-bottom: 30px;
+
+}
+
+.header h1 {
+
+    font-size: 42px;
+
+    margin-bottom: 10px;
+
+}
+
+.header p {
+
+    color: #718096;
+
+    font-size: 18px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card {
+
+    border:
+        1px solid #075486;
+
+    border-radius: 15px;
+
+    background:
+        rgba(0,8,22,0.8);
+
+    padding: 35px;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+h2 {
+
+    color:
+        #d5dbe6;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+table {
+
+    width: 100%;
+
+    border-collapse:
+        collapse;
+
+}
+
+
+th {
+
+    text-align: left;
+
+    color:
+        #00ff9d;
+
+    padding: 18px;
+
+    border-bottom:
+        1px solid #12344d;
+
+    font-size: 17px;
+
+}
+
+
+td {
+
+    padding: 20px;
+
+    border-bottom:
+        1px solid #10263b;
+
+    font-size: 17px;
+
+}
+
+
+td:last-child {
+
+    color:
+        #d5dbe6;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.online {
+
+    color:
+        #00ff9d !important;
+
+    font-weight:
+        bold;
+
+}
+
+
+.offline {
+
+    color:
+        #ff5c5c !important;
+
+    font-weight:
+        bold;
+
+}
+
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+.buttons {
+
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 25px;
+
+}
+
+
+button {
+
+    background:
+        rgba(0,8,22,0.8);
+
+    border:
+        1px solid #075486;
+
+    color:
+        #00ff9d;
+
+    padding:
+        12px 22px;
+
+    border-radius:
+        8px;
+
+    cursor:
+        pointer;
+
+    font-weight:
+        bold;
+
+}
+
+
+button:hover {
+
+    background:
+        #00ff9d;
+
+    color:
+        #000816;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:650px) {
+
+    .container {
+
+        width: 95%;
+
+    }
+
+    .header h1 {
+
+        font-size: 30px;
+
+    }
+
+    .card {
+
+        padding: 20px;
+
+    }
+
+    table {
+
+        font-size: 14px;
+
+    }
+
+}
+
+.chr1-page {
+    --router-accent: #00ff9d;
+    --router-accent-soft: rgba(0, 255, 157, 0.1);
+    --router-glow: rgba(0, 255, 157, 0.15);
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 85% 4%, rgba(0, 122, 161, 0.16), transparent 30%),
+        radial-gradient(circle at 10% 100%, rgba(0, 255, 157, 0.07), transparent 32%),
+        #010714;
+}
+
+.container {
+    width: min(94%, 1180px);
+    margin: 28px auto 50px;
+}
+
+.router-header {
+    position: relative;
+    display: flex;
+    min-height: 190px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin: 0 0 16px;
+    padding: 27px 30px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 90, 160, 0.48);
+    border-radius: 16px;
+    background:
+        radial-gradient(ellipse at 82% 50%, var(--router-glow), transparent 35%),
+        linear-gradient(125deg, rgba(6, 25, 48, 0.98), rgba(2, 14, 31, 0.98));
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+}
+
+.router-header::after {
+    position: absolute;
+    top: -82px;
+    right: 7%;
+    width: 260px;
+    height: 260px;
+    border: 1px solid rgba(21, 155, 215, 0.18);
+    border-radius: 50%;
+    box-shadow: 0 0 0 20px rgba(21, 155, 215, 0.035), 0 0 0 42px rgba(21, 155, 215, 0.025);
+    content: "";
+    pointer-events: none;
+}
+
+.router-heading-copy,
+.router-header-side {
+    position: relative;
+    z-index: 1;
+}
+
+.router-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--router-accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+}
+
+.router-eyebrow i,
+.router-live-tag i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--router-accent);
+    box-shadow: 0 0 10px var(--router-accent);
+}
+
+.router-header h1 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0 7px;
+    color: #e7edf5;
+    font-size: clamp(32px, 5vw, 46px);
+    letter-spacing: -1px;
+}
+
+.router-number {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid rgba(0, 255, 157, 0.28);
+    border-radius: 12px;
+    background: var(--router-accent-soft);
+    color: var(--router-accent);
+    font-size: 17px;
+    letter-spacing: 0;
+}
+
+.router-header p {
+    margin: 0;
+    color: #8d9cb0;
+    font-size: 13px;
+}
+
+.router-header-side {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.router-live-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border: 1px solid rgba(0, 255, 157, 0.22);
+    border-radius: 999px;
+    background: var(--router-accent-soft);
+    color: #bdebd9;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+}
+
+.router-header-side a {
+    color: #8cc4dc;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.router-header-side a:hover { color: var(--router-accent); }
+
+.card {
+    margin-bottom: 16px;
+    padding: 22px;
+    border-color: rgba(0, 90, 160, 0.38);
+    border-radius: 14px;
+    background: linear-gradient(145deg, rgba(6, 22, 43, 0.97), rgba(2, 12, 27, 0.98));
+    box-shadow: 0 15px 38px rgba(0, 0, 0, 0.18);
+}
+
+.card h2 {
+    margin: 0;
+    color: #e0e8f2;
+    font-size: 17px;
+    letter-spacing: 0.3px;
+}
+
+.card-caption {
+    margin: 6px 0 18px;
+    color: #78899e;
+    font-size: 11px;
+}
+
+table {
+    display: block;
+    border-collapse: separate;
+}
+
+table tbody {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+table tr:first-child { display: none; }
+
+table tr:not(:first-child) {
+    display: grid;
+    min-height: 76px;
+    grid-template-columns: minmax(105px, 0.8fr) minmax(0, 1.2fr);
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid rgba(0, 90, 160, 0.28);
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(0, 8, 22, 0.78), rgba(5, 20, 38, 0.78));
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+
+table tr:not(:first-child):hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 255, 157, 0.36);
+    background: linear-gradient(135deg, rgba(0, 255, 157, 0.06), rgba(5, 20, 38, 0.88));
+}
+
+table tr:last-child { grid-column: 1 / -1; }
+
+table td {
+    padding: 5px 7px;
+    border: 0;
+    font-size: 12px;
+}
+
+table td:first-child {
+    color: #8092a7;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+table td:last-child {
+    min-width: 0;
+    color: #d5dbe6;
+    font-size: 13px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+#cpu,
+#memory {
+    display: inline-block;
+    color: #e3eaf3;
+    font-size: 17px;
+}
+
+.usage-bar {
+    width: 100%;
+    height: 4px;
+    margin-top: 7px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: rgba(145, 167, 193, 0.15);
+}
+
+.usage-bar i {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #00ff9d, #159bd7);
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+    transition: width 0.45s ease;
+}
+
+.memory-bar i { background: linear-gradient(90deg, #159bd7, #56c9f1); }
+
+.chr-insights {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.chr-insight {
+    padding: 15px;
+    border: 1px solid rgba(99, 144, 190, 0.14);
+    border-radius: 10px;
+    background: rgba(3, 13, 29, 0.78);
+}
+
+.chr-insight small {
+    display: block;
+    margin-bottom: 8px;
+    color: #718097;
+    font-size: 10px;
+    letter-spacing: 0.7px;
+}
+
+.chr-insight strong {
+    color: #dcecff;
+    font-size: 16px;
+}
+
+#status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 10px;
+    border: 1px solid rgba(255, 92, 92, 0.25);
+    border-radius: 999px;
+    background: rgba(255, 92, 92, 0.08);
+    font-size: 10px;
+    letter-spacing: 0.6px;
+}
+
+#status::before {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 9px currentColor;
+    content: "";
+}
+
+#status.online {
+    border-color: rgba(0, 255, 157, 0.25);
+    background: rgba(0, 255, 157, 0.08);
+}
+
+.buttons {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+button {
+    border-color: rgba(0, 90, 160, 0.45);
+    border-radius: 8px;
+    background: rgba(0, 8, 22, 0.8);
+    color: #b7c8d8;
+    transition: transform 0.2s, border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    border-color: var(--router-accent);
+    background: var(--router-accent);
+    color: #000816;
+}
+
+@media(max-width:700px) {
+    .container { width: 94%; margin: 16px auto 30px; }
+    .router-header { min-height: 0; align-items: flex-start; padding: 22px 18px; }
+    .router-header-side { align-items: flex-end; }
+    .router-header::after { right: -120px; }
+    .card { padding: 17px; }
+    table tbody { grid-template-columns: 1fr; gap: 8px; }
+    table tr:last-child { grid-column: auto; }
+    .chr-insights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+</style>
+
+</head>
+
+
+<body class="chr1-page">
+
+
+<div class="container">
+
+
+<div class="header router-header">
+<div class="router-heading-copy">
+<span class="router-eyebrow"><i></i> NETMON / ROUTER MONITORING / 01</span>
+<h1>
+<span class="router-number">01</span> CHR 1
+</h1>
+
+<p>
+Ringkasan performa dan konfigurasi MikroTik CHR 1
+</p>
+</div>
+<div class="router-header-side">
+<span class="router-live-tag"><i></i> LIVE MONITOR</span>
+<a href="/">← Dashboard</a>
+</div>
+</div>
+
+
+
+<div class="card">
+
+<h2>
+DEVICE SNAPSHOT
+</h2>
+<p class="card-caption">Informasi perangkat diperbarui otomatis setiap 3 detik</p>
+
+
+<table>
+
+<tr>
+
+<th>
+Informasi
+</th>
+
+<th>
+Nilai
+</th>
+
+</tr>
+
+
+<tr>
+
+<td>
+Router Name
+</td>
+
+<td id="name">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+IP Address
+</td>
+
+<td id="ip">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+RouterOS Version
+</td>
+
+<td id="version">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+CPU Usage
+</td>
+
+<td>
+<span id="cpu">-</span>
+<div class="usage-bar"><i id="cpuMeter"></i></div>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Memory Usage
+</td>
+
+<td>
+<span id="memory">-</span>
+<div class="usage-bar memory-bar"><i id="memoryMeter"></i></div>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Uptime
+</td>
+
+<td id="uptime">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Interface
+</td>
+
+<td id="interface">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Status
+</td>
+
+<td id="status">
+-
+</td>
+
+</tr>
+
+</table>
+
+<div class="chr-insights">
+    <div class="chr-insight"><small>ACTIVE INTERFACE</small><strong id="insightInterface">-</strong></div>
+    <div class="chr-insight"><small>DOWNLOAD</small><strong id="insightDownload">0 Mbps</strong></div>
+    <div class="chr-insight"><small>UPLOAD</small><strong id="insightUpload">0 Mbps</strong></div>
+    <div class="chr-insight"><small>INTERFACE COUNT</small><strong id="insightInterfaceCount">0</strong></div>
+</div>
+
+
+<div class="buttons">
+
+<button
+onclick="location.href='/'">
+KEMBALI KE DASHBOARD
+</button>
+
+
+<button
+onclick="location.href='/chr2'">
+BUKA CHR 2
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+async function updateCHR1() {
+
+    try {
+
+        const response =
+            await fetch("/api/status");
+
+        const data =
+            await response.json();
+
+        const router =
+            data.routers["CHR 1"];
+
+
+        document.getElementById(
+            "name"
+        ).textContent =
+            router.name || "-";
+
+
+        document.getElementById(
+            "ip"
+        ).textContent =
+            router.ip || "-";
+
+
+        document.getElementById(
+            "version"
+        ).textContent =
+            router.version || "-";
+
+
+        document.getElementById(
+            "cpu"
+        ).textContent =
+            (router.cpu ?? 0) + "%";
+
+
+        document.getElementById(
+            "memory"
+        ).textContent =
+            (router.memory ?? 0) + "%";
+
+        document.getElementById("cpuMeter").style.width =
+            Math.max(0, Math.min(100, Number(router.cpu) || 0)) + "%";
+
+        document.getElementById("memoryMeter").style.width =
+            Math.max(0, Math.min(100, Number(router.memory) || 0)) + "%";
+
+        document.getElementById(
+            "uptime"
+        ).textContent =
+            router.uptime || "-";
+
+
+        document.getElementById(
+            "interface"
+        ).textContent =
+            router.interface || "-";
+
+        document.getElementById("insightInterface").textContent =
+            router.interface || "-";
+        document.getElementById("insightInterfaceCount").textContent =
+            (router.interfaces || []).filter(function (item) {
+                return item.name !== "lo"
+                    && String(item.type || "").toLowerCase() !== "loopback";
+            }).length;
+        document.getElementById("insightDownload").textContent =
+            Number(data.traffic_chr1?.download ?? 0).toFixed(3) + " Mbps";
+        document.getElementById("insightUpload").textContent =
+            Number(data.traffic_chr1?.upload ?? 0).toFixed(3) + " Mbps";
+
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+        status.textContent =
+            router.status || "OFFLINE";
+
+
+        status.className =
+            router.status === "ONLINE"
+                ? "online"
+                : "offline";
+
+    }
+
+    catch(error) {
+
+        document.getElementById(
+            "status"
+        ).textContent =
+            "API ERROR";
+
+        document.getElementById(
+            "status"
+        ).className =
+            "offline";
+
+    }
+
+}
+
+
+updateCHR1();
+
+
+setInterval(
+    updateCHR1,
+    3000
+);
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: monitoring-mikrotik
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - key: FLASK_SECRET_KEY
+        sync: false
+      - key: ROUTEROS_USERNAME
+        sync: false
+      - key: ROUTEROS_PASSWORD
+        sync: false
+      - key: APP_USERS
+        sync: false

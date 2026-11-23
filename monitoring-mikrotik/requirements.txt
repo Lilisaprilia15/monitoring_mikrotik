@@ -1,0 +1,5 @@
+Flask
+routeros-api
+openpyxl
+python-dotenv
+gunicorn

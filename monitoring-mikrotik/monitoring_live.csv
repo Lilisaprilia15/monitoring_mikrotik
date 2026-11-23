@@ -1,0 +1,4 @@
+﻿Waktu,Router,IP,Status,CPU (%),Memory (%),Interface,Download (Mbps),Upload (Mbps)
+2026-11-23 18:15:16,CHR 1,192.168.56.10,ONLINE,0,13.6,ether2,0.001,0.006
+2026-11-23 18:15:16,CHR 2,192.168.56.11,ONLINE,0,13.6,ether3,0.001,0.006
+2026-11-23 18:15:16,CHR 3,192.168.56.13,ONLINE (SIM),23,36.2,ether3,13.133,6.801
